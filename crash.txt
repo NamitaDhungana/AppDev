@@ -1,0 +1,13 @@
+System.InvalidOperationException: A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+   at Microsoft.EntityFrameworkCore.Infrastructure.Internal.ConcurrencyDetector.EnterCriticalSection()
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at JournalApp.Repositories.JournalRepository.GetAllAsync() in C:\JournalApp\JournalApp\Repositories\JournalRepository.cs:line 23
+   at JournalApp.Services.AnalyticsService.GetCurrentStreakAsync() in C:\JournalApp\JournalApp\Services\AnalyticsService.cs:line 32
+   at JournalApp.ViewModels.DashboardViewModel.<LoadStats>b__18_0() in C:\JournalApp\JournalApp\ViewModels\DashboardViewModel.cs:line 84
+   at JournalApp.ViewModels.DashboardViewModel.LoadStats() in C:\JournalApp\JournalApp\ViewModels\DashboardViewModel.cs:line 83
+   at CommunityToolkit.Mvvm.Input.AsyncRelayCommand.AwaitAndThrowIfFailed(Task executionTask)
+   at System.Threading.Tasks.Task.<>c.<ThrowAsync>b__128_0(Object state)
+   at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)

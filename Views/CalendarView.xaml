@@ -1,0 +1,84 @@
+<UserControl x:Class="JournalApp.Views.CalendarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewmodels="clr-namespace:JournalApp.ViewModels"
+             xmlns:converters="clr-namespace:JournalApp.Converters"
+             d:DataContext="{d:DesignInstance Type=viewmodels:CalendarViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:DateHighlightConverter x:Key="DateHighlightConverter" />
+    </UserControl.Resources>
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Calendar Navigation" Style="{DynamicResource MaterialDesignHeadline4TextBlock}" Margin="0,0,0,24"/>
+
+        <materialDesign:Card Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Viewbox Grid.Row="0">
+                        <Calendar x:Name="WpfCalendar" 
+                                  SelectedDate="{Binding SelectedDate}">
+                            <Calendar.CalendarDayButtonStyle>
+                                <Style TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource DateHighlightConverter}">
+                                                <Binding Path="." />
+                                                <Binding Path="DataContext.EntryDates" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Calendar.CalendarDayButtonStyle>
+                        </Calendar>
+                    </Viewbox>
+                    
+                    <Button Grid.Row="1" 
+                            Content="VIEW ENTRY FOR SELECTED DATE" 
+                            Command="{Binding GoToDateEntryCommand}" 
+                            Margin="0,16,16,0" 
+                            Style="{DynamicResource MaterialDesignRaisedButton}"
+                            Height="50"/>
+                </Grid>
+
+                <Grid Grid.Column="1" Margin="8,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Text="Days with Entries" Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,8"/>
+                    
+                    <ListBox Grid.Row="1" ItemsSource="{Binding EntryDates}" SelectedItem="{Binding SelectedDate}" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <materialDesign:PackIcon Kind="CheckCircle" Foreground="Green" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{Binding StringFormat='{}{0:D}'}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

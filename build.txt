@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Anti gravity\JournalApp\Views\LoginView.xaml(12,136): error MC3072: The property 'Elevation' does not exist in XML namespace 'http://materialdesigninxaml.net/winfx/xaml/themes'. Line 12 Position 136. [C:\Anti gravity\JournalApp\JournalApp.csproj]
+
+Build FAILED.
+
+C:\Anti gravity\JournalApp\Views\LoginView.xaml(12,136): error MC3072: The property 'Elevation' does not exist in XML namespace 'http://materialdesigninxaml.net/winfx/xaml/themes'. Line 12 Position 136. [C:\Anti gravity\JournalApp\JournalApp.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.89

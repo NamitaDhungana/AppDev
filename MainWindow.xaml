@@ -1,0 +1,72 @@
+﻿<Window x:Class="JournalApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JournalApp"
+        xmlns:viewmodels="clr-namespace:JournalApp.ViewModels"
+        xmlns:views="clr-namespace:JournalApp.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="My Journal" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+    
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+            <views:LoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:EntryViewModel}">
+            <views:EntryView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TimelineViewModel}">
+            <views:TimelineView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:DashboardViewModel}">
+            <views:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:CalendarViewModel}">
+            <views:CalendarView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
+            <views:SettingsView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <Grid Width="200" Background="{DynamicResource MaterialDesignPaper}">
+                    <StackPanel Margin="16">
+                        <TextBlock Text="Journal App" Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,24"/>
+                        
+                        <ListBox x:Name="NavigationListBox" Style="{StaticResource MaterialDesignListBox}" SelectionChanged="NavigationListBox_SelectionChanged">
+                            <ListBoxItem Content="Today's Entry" x:Name="EntryItem"/>
+                            <ListBoxItem Content="Timeline" x:Name="TimelineItem"/>
+                            <ListBoxItem Content="Calendar" x:Name="CalendarItem"/>
+                            <ListBoxItem Content="Dashboard" x:Name="DashboardItem"/>
+                            <ListBoxItem Content="Settings" x:Name="SettingsItem"/>
+                        </ListBox>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" materialDesign:ElevationAssist.Elevation="Dp4">
+                    <DockPanel>
+                        <ToggleButton x:Name="MenuToggleButton" Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"/>
+                        <TextBlock Text="My Journal" VerticalAlignment="Center" Margin="16,0,0,0" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+
+                <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />
+            </Grid>
+        </materialDesign:DrawerHost>
+    </Grid>
+</Window>
